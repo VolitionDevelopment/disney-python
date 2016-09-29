@@ -7,13 +7,41 @@
                 <b>Uh oh! </b>Looks like your query failed. That's not good!
             </div>
         {% elif success == 'true' %}
-        <div class="alert alert-success">
-            <b>Yay! </b>You successfully inserted the data. Good for you
-        </div>
+            <div class="alert alert-success">
+                <b>Yay! </b>You successfully inserted the data. Good for you
+            </div>
         {% endif %}
 
         <div class="jumbotron">
-            <h2>AdminCP</h2>
+            <h2>Edit Entries</h2>
+            <table class="table table-striped" id="entries">
+                <thead>
+                <tr>
+                    <th>Header</th>
+                    <th>Content</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in home_data %}
+                    <tr>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td><a href="/edit/{{ row[0] }}"><i class="glyphicon glyphicon-edit"></i></a></td>
+                        <td><a href="/delete/{{ row[0] }}"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="jumbotron">
+            <h2>Submit New Entry</h2>
             <form class="form-horizontal" method="post" action="/admin">
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Header Text</label>
@@ -41,5 +69,11 @@
             </form>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#entries').DataTable();
+        });
+    </script>
 
 {% endblock %}
